@@ -1,0 +1,24 @@
+/dts-v1/;
+/plugin/;
+
+/{
+	compatible = "phantom", "amlogic, sc2";
+
+	fragment@0 {
+		target = <&uart_C>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+	
+	fragment@1 {
+		target = <&spi0>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+};
+
+
+
+

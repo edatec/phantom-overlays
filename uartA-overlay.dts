@@ -1,0 +1,20 @@
+/dts-v1/;
+/plugin/;
+
+/{
+	compatible = "phantom", "amlogic, sc2";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			aliases {
+				serial0 = "/soc/apb4@fe000000/serial@7a000";
+				serial1 = "/soc/serial@fe078000";
+			};
+		};
+	};
+};
+
+
+
+
