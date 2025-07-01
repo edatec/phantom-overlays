@@ -1,0 +1,40 @@
+/*
+ * Device tree overlay for mcp251xfd/can0 on spi0.0
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "phantom", "amlogic, sc2";
+    /* disable spi-dev for spi0.0 */
+    fragment@0 {
+        target = <&spi0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@1 {
+        target = <&spidev0>;
+        __overlay__ {
+            spidev0_0:spidev0_0 {
+                status = "okay";
+            };
+        };
+    };
+
+    fragment@2 {
+    target = <&spidev1>;
+        __overlay__ {
+            spidev0_1:spidev0_1 {
+                status = "disabled";
+            };
+        };
+    };
+
+    __overrides__ {
+        cs0_spidev = <&spidev0_0>,"status";
+        cs1_spidev = <&spidev0_1>,"status";
+    };
+};
