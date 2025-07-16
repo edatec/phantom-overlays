@@ -41,7 +41,7 @@
     fragment@3 {
         target-path = "/";
         __overlay__ {
-            /* external oscillator of mcp2515 on spi0.0 */
+            /* external oscillator of mcp2518fd on spi0.0 */
             can0_osc: can0_osc {
                 compatible = "fixed-clock";
                 #clock-cells = <0>;
@@ -59,7 +59,7 @@
             #size-cells = <0>;
             can0: mcp251x@0 {
                 reg = <0>;
-                compatible = "microchip,mcp2517fd";
+                compatible = "microchip,mcp2518fd";
                 pinctrl-names = "default";
                 pinctrl-0 = <&can0_pins>;
                 spi-max-frequency = <20000000>;
