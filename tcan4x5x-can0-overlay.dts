@@ -1,0 +1,63 @@
+/*
+ * Device tree overlay for tcan4x5x/can0 on spi0.0
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "phantom", "amlogic, sc2";
+    /* disable spi-dev for spi0.0 */
+    fragment@0 {
+        target = <&spi0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@1 {
+        target = <&spidev0>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
+
+    /* the interrupt pin of the can-controller */
+    fragment@2 {
+        target = <&periphs_pinctrl>;
+        __overlay__ {
+            can0_int_pin: can0_int_pin {
+                mux {
+                    groups = "GPIOZ_3";
+                    function = "gpio_periphs";
+                    bias-pull-up;
+                    input-enable;
+                };
+            };
+        };
+    };
+
+    /* the spi config of the can-controller itself binding everything together */
+    fragment@3 {
+        target = <&spi0>;
+        __overlay__ {
+            /* needed to avoid dtc warning */
+            #address-cells = <1>;
+            #size-cells = <0>;
+            can0: tcan4x5x@0 {
+                reg = <0>;
+                compatible = "ti,tcan4x5x";
+                pinctrl-names = "default";
+                pinctrl-0 = <&can0_int_pin>;
+                spi-max-frequency = <10000000>;
+                bosch,mram-cfg = <0x0 0 0 16 0 0 1 1>;
+                interrupt-parent = <&gpio_intc>;
+                interrupts = <73 8>; /* IRQ_TYPE_LEVEL_LOW */
+            };
+        };
+    };
+    __overrides__ {
+        spimaxfrequency = <&can0>,"spi-max-frequency:0";
+        interrupt = <&can0>,"interrupts:0";
+    };
+};
