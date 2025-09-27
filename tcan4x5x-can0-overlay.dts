@@ -53,6 +53,7 @@
                 bosch,mram-cfg = <0x0 0 0 16 0 0 1 1>;
                 interrupt-parent = <&gpio_intc>;
                 interrupts = <73 8>; /* IRQ_TYPE_LEVEL_LOW */
+                reset-gpios = <&gpio 72 0>;
             };
         };
     };

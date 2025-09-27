@@ -1,0 +1,41 @@
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "phantom", "amlogic, sc2";
+    fragment@0 {
+        target = <&sd_emmc_b>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
+	
+    fragment@1 {
+        target = <&spicc0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@2 {
+        target = <&spicc0>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+             
+            pinctrl-0 = <&spicc0_pins_c>;
+            pinctrl-names = "default";
+            cs-gpios = <&gpio 20 0>;  /*GPIOC_2*/
+            
+            
+            spidev0: spidev@0 {
+                compatible = "spidev";
+                reg = <0>;
+                #address-cells = <1>;
+                #size-cells = <0>;
+                spi-max-frequency = <50000000>;
+            };
+        };
+    };
+};
